@@ -33,7 +33,7 @@ def build_spec(app, loop):
         "contact": {
             "email": getattr(app.config, 'API_CONTACT_EMAIL', None)
         },
-        "host": getattr(app.config, 'API_HOST', None),
+        #"host": getattr(app.config, 'API_HOST', None),
         "license": {
             "name": getattr(app.config, 'API_LICENSE_NAME', None),
             "url": getattr(app.config, 'API_LICENSE_URL', None)
