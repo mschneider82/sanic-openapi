@@ -39,7 +39,7 @@ def build_spec(app, loop):
         }
     }
     if getattr(app.config, 'API_HOST', None):
-        _spec['host'] = getattr(app.config, 'API_HOST', None),   
+        _spec['host'] = getattr(app.config, 'API_HOST', None)
     _spec['schemes'] = getattr(app.config, 'API_SCHEMES', ['http'])
 
     # --------------------------------------------------------------- #
