@@ -186,6 +186,8 @@ class RouteSpec:
     blueprint = None
     tags = None
     hide = None
+    produces_description = None
+    produces_examples = None
 
     def __init__(self):
         self.tags = []
