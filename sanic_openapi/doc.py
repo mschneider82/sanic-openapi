@@ -185,6 +185,7 @@ class RouteSpec:
     operation = None
     blueprint = None
     tags = None
+    hide = None
 
     def __init__(self):
         self.tags = []
@@ -195,7 +196,7 @@ route_specs = defaultdict(RouteSpec)
 
 
 def route(summary=None, description=None, consumes=None, produces=None,
-          consumes_content_type=None, produces_content_type=None):
+          consumes_content_type=None, produces_content_type=None, hide=None):
     def inner(func):
         route_spec = route_specs[func]
 
@@ -211,6 +212,8 @@ def route(summary=None, description=None, consumes=None, produces=None,
             route_spec.consumes_content_type = consumes_content_type
         if produces_content_type is not None:
             route_spec.produces_content_type = produces_content_type
+        if hide is not None:
+            route_spec.hide = hide
 
         return func
     return inner
@@ -254,7 +257,7 @@ def tag(name):
         return func
     return inner
 
-def hide(text):
+def hide():
     def inner(func):
         route_specs[func].hide = True
         return func
