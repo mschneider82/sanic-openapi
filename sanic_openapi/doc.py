@@ -124,7 +124,7 @@ class Object(Field):
         return {
             # "type": "object",
             #"schema": {
-            "$ref": "#/definitions/{}".format(self.object_name)
+            "$ref": "#/definitions/{}".format(self.object_name),
             #},
             **super().serialize()
         }
