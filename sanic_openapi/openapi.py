@@ -79,6 +79,8 @@ def build_spec(app, loop):
                 continue
 
             route_spec = route_specs.get(_handler) or RouteSpec()
+            if route_spec.hide:
+                continue
             consumes_content_types = route_spec.consumes_content_type or \
                 getattr(app.config, 'API_CONSUMES_CONTENT_TYPES', ['application/json'])
             produces_content_types = route_spec.produces_content_type or \

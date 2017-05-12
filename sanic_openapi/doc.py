@@ -253,3 +253,9 @@ def tag(name):
         route_specs[func].tags.append(name)
         return func
     return inner
+
+def hide(text):
+    def inner(func):
+        route_specs[func].hide = True
+        return func
+    return inner
