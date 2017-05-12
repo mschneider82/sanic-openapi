@@ -123,8 +123,8 @@ def build_spec(app, loop):
                 'parameters': path_parameters + query_string_parameters + body_parameters,
                 'responses': {
                     "200": {
-                        "description": None,
-                        "examples": None,
+                        "description": route_spec.produces_description,
+                        "examples": route_spec.produces_examples,
                         "schema": serialize_schema(route_spec.produces) if route_spec.produces else None
                     }
                 },

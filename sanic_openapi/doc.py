@@ -122,10 +122,10 @@ class Object(Field):
 
     def serialize(self):
         return {
-            "type": "object",
-            "schema": {
-                "$ref": "#/definitions/{}".format(self.object_name)
-            },
+            # "type": "object",
+            #"schema": {
+            "$ref": "#/definitions/{}".format(self.object_name)
+            #},
             **super().serialize()
         }
 
@@ -242,11 +242,13 @@ def consumes(*args, content_type=None):
     return inner
 
 
-def produces(*args, content_type=None):
+def produces(*args, description='', content_type=None, examples=None):
     def inner(func):
         if args:
             route_specs[func].produces = args[0] if len(args) == 1 else args
             route_specs[func].produces_content_type = content_type
+            route_specs[func].produces_description = description
+            route_specs[func].produces_examples = examples
         return func
     return inner
 
