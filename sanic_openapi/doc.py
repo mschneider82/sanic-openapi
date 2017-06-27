@@ -3,12 +3,13 @@ from datetime import date, datetime
 
 
 class Field:
-    def __init__(self, description=None, required=None, name=None, default=None, enum=None):
+    def __init__(self, description=None, required=None, name=None, default=None, enum=None, indata=None):
         self.name = name
         self.description = description
         self.required = required
         self.default = default
         self.enum = enum
+        self.indata = indata
 
     def serialize(self):
         output = {}
@@ -22,6 +23,8 @@ class Field:
             output['default'] = self.default
         if self.enum is not None:
             output['enum'] = self.enum
+        if self.indata is not None:
+            output['in'] = self.indata
         return output
 
 
@@ -44,6 +47,12 @@ class Integer(Field):
             **super().serialize()
         }
 
+class File(Field):
+    def serialize(self):
+        return {
+            "type": "file",
+            **super().serialize()
+        }
 
 class String(Field):
     def serialize(self):

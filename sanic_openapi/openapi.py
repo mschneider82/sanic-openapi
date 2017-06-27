@@ -109,11 +109,12 @@ def build_spec(app, loop):
                                 'name': name,
                             })
                 else:
-                    body_parameters.append({
-                        **serialize_schema(route_spec.consumes),
-                        'in': 'body',
-                        'name': 'body',
-                    })
+                    field = serialize_schema(route_spec.consumes)
+                    if not field.get('in'):
+                        field['in'] = 'body'
+                    if not field.get('name'):
+                        field['name'] = 'body'
+                    body_parameters.append(field)
 
             if route_spec.headers:
                 spec = serialize_schema(route_spec.headers)
