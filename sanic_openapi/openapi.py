@@ -110,11 +110,18 @@ def build_spec(app, loop):
                             })
                 else:
                     field = serialize_schema(route_spec.consumes)
-                    if not field.get('in'):
-                        field['in'] = 'body'
-                    if not field.get('name'):
-                        field['name'] = 'body'
-                    body_parameters.append(field)
+                    if 'properties' in field:
+                        for name, prop_spec in field['properties'].items():
+                            body_parameters.append({
+                                **prop_spec,
+                                'name': name,
+                            })
+                    else:
+                        if not field.get('in'):
+                            field['in'] = 'body'
+                        if not field.get('name'):
+                            field['name'] = 'body'
+                        body_parameters.append(field)
 
             if route_spec.headers:
                 spec = serialize_schema(route_spec.headers)
