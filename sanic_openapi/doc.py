@@ -201,6 +201,7 @@ class RouteSpec:
     hide = None
     produces_description = None
     produces_examples = None
+    headers = None
 
     def __init__(self):
         self.tags = []
@@ -211,7 +212,7 @@ route_specs = defaultdict(RouteSpec)
 
 
 def route(summary=None, description=None, consumes=None, produces=None,
-          consumes_content_type=None, produces_content_type=None, hide=None):
+          consumes_content_type=None, produces_content_type=None, hide=None, headers=None):
     def inner(func):
         route_spec = route_specs[func]
 
@@ -229,6 +230,8 @@ def route(summary=None, description=None, consumes=None, produces=None,
             route_spec.produces_content_type = produces_content_type
         if hide is not None:
             route_spec.hide = hide
+        if headers is not None:
+            route_spec.headers = headers
 
         return func
     return inner
@@ -277,5 +280,12 @@ def tag(name):
 def hide():
     def inner(func):
         route_specs[func].hide = True
+        return func
+    return inner
+
+def headers(*args):
+    def inner(func):
+        if args:
+            route_specs[func].headers = args
         return func
     return inner

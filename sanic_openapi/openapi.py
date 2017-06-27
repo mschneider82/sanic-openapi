@@ -95,6 +95,7 @@ def build_spec(app, loop):
             } for parameter in route.parameters]
             query_string_parameters = []
             body_parameters = []
+            headers_parameters = []
 
             if route_spec.consumes:
                 if _method in ('GET', 'DELETE'):
@@ -113,6 +114,16 @@ def build_spec(app, loop):
                         'name': 'body',
                     })
 
+            if route_spec.headers:
+                spec = serialize_schema(route_spec.headers)
+                if 'properties' in spec:
+                        for name, prop_spec in spec['properties'].items():
+                            headers_parameters.append({
+                                **prop_spec,
+                                'in': 'header',
+                                'name': name,
+                            })
+    
             endpoint = remove_nulls({
                 'operationId': (route_spec.operation or route.name) + "_" + _method.lower(),
                 'summary': route_spec.summary,
@@ -120,7 +131,7 @@ def build_spec(app, loop):
                 'consumes': consumes_content_types,
                 'produces': produces_content_types,
                 'tags': route_spec.tags or None,
-                'parameters': path_parameters + query_string_parameters + body_parameters,
+                'parameters': path_parameters + headers_parameters + query_string_parameters + body_parameters,
                 'responses': {
                     "200": {
                         "description": route_spec.produces_description,
