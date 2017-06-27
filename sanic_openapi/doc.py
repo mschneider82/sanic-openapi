@@ -286,6 +286,6 @@ def hide():
 def headers(*args):
     def inner(func):
         if args:
-            route_specs[func].headers = args
+            route_specs[func].headers = args[0] if len(args) == 1 else args
         return func
     return inner
