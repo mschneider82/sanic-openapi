@@ -32,11 +32,15 @@ class Integer(Field):
         self.maximum = maximum
         
     def serialize(self):
+        addition = {}
+        if self.minimum is not None:
+            addition["minimum"] = self.minimum
+        if self.maximum is not None:
+            addition["maximum"] = self.maximum
         return {
             "type": "integer",
             "format": "int64",
-            "minimum": self.minimum,
-            "maximum": self.maximum,
+            **addition,
             **super().serialize()
         }
 
