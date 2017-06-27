@@ -114,7 +114,7 @@ def build_spec(app, loop):
                     })
 
             endpoint = remove_nulls({
-                'operationId': (route_spec.operation or route.name) + _method.lower(),
+                'operationId': (route_spec.operation or route.name) + "_" + _method.lower(),
                 'summary': route_spec.summary,
                 'description': route_spec.description,
                 'consumes': consumes_content_types,

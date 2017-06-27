@@ -3,10 +3,12 @@ from datetime import date, datetime
 
 
 class Field:
-    def __init__(self, description=None, required=None, name=None):
+    def __init__(self, description=None, required=None, name=None, default=None, enum=None):
         self.name = name
         self.description = description
         self.required = required
+        self.default = default
+        self.enum = enum
 
     def serialize(self):
         output = {}
@@ -16,14 +18,25 @@ class Field:
             output['description'] = self.description
         if self.required is not None:
             output['required'] = self.required
+        if self.default is not None:
+            output['default'] = self.default
+        if self.enum is not None:
+            output['enum'] = self.enum
         return output
 
 
 class Integer(Field):
+    def __init__(self, description=None, required=None, name=None, default=None, enum=None, minimum=None, maximum=None):
+        super().__init__(description, required, name, default)
+        self.minimum = minimum
+        self.maximum = maximum
+        
     def serialize(self):
         return {
             "type": "integer",
             "format": "int64",
+            "minimum": self.minimum,
+            "maximum": self.maximum,
             **super().serialize()
         }
 
