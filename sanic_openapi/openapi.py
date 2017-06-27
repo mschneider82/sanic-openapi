@@ -40,6 +40,8 @@ def build_spec(app, loop):
     }
     if getattr(app.config, 'API_HOST', None):
         _spec['host'] = getattr(app.config, 'API_HOST', None)
+    if getattr(app.config, 'API_BASEPATH', None):
+        _spec['basePath'] = getattr(app.config, 'API_BASEPATH', None)
     _spec['schemes'] = getattr(app.config, 'API_SCHEMES', ['http'])
 
     # --------------------------------------------------------------- #
