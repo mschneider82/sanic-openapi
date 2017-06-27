@@ -92,6 +92,7 @@ def build_spec(app, loop):
                 'required': True,
                 'in': 'path',
                 'name': parameter.name,
+                'description': parameter.name
             } for parameter in route.parameters]
             query_string_parameters = []
             body_parameters = []
