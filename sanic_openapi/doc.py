@@ -61,6 +61,12 @@ class String(Field):
             **super().serialize()
         }
 
+class Float(Field):
+    def serialize(self):
+        return {
+            "type": "float",
+            **super().serialize()
+        }
 
 class Boolean(Field):
     def serialize(self):
@@ -175,6 +181,8 @@ def serialize_schema(schema):
             return String().serialize()
         elif schema is bool:
             return Boolean().serialize()
+        elif schema is float:
+            return Float().serialize()
         elif schema is date:
             return Date().serialize()
         elif schema is datetime:
