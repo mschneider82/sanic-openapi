@@ -62,9 +62,21 @@ class String(Field):
         }
 
 class Float(Field):
+    def __init__(self, description=None, required=None, name=None, default=None, enum=None, minimum=None, maximum=None):
+        super().__init__(description, required, name, default)
+        self.minimum = minimum
+        self.maximum = maximum
+        
     def serialize(self):
+        addition = {}
+        if self.minimum is not None:
+            addition["minimum"] = self.minimum
+        if self.maximum is not None:
+            addition["maximum"] = self.maximum
         return {
-            "type": "float",
+            "type": "number",
+            "format": "float",
+            **addition,
             **super().serialize()
         }
 
